@@ -8,8 +8,48 @@ TopBar.RightFrame.HealthBar.HealthBar.Visible=false
 TopBar.LeftFrame.Position=UDim2.new(0,10,0,-2)
 TopBar.LeftFrame.MenuIcon.Background.ImageTransparency=1
 TopBar.LeftFrame.MenuIcon.Background.StateOverlay.Image=""
+TopBar.LeftFrame.MenuIcon.Background.Icon.Image="rbxasset://textures/ui/Menu/Hamburger@2x.png"
+TopBar.LeftFrame.MenuIcon.Background.Icon.Size=UDim2.new(0,30,0,30)
+TopBar.LeftFrame.MenuIcon.Background.Icon.ScaleType="Fit"
+TopBar.Parent.LegacyCloseMenu.CloseMenuButton.Image="rbxasset://textures/ui/Menu/HamburgerDown@2x.png"
+TopBar.Parent.LegacyCloseMenu.CloseMenuButton.ImageRectOffset=Vector2.new(0,0)
+TopBar.Parent.LegacyCloseMenu.CloseMenuButton.ImageRectSize=Vector2.new(0,0)
+TopBar.Parent.LegacyCloseMenu.CloseMenuButton.ScaleType="Fit"
 TopBar.LeftFrame.ChatIcon.Background.ImageTransparency=1
 TopBar.LeftFrame.ChatIcon.Background.StateOverlay.Image=""
+TopBar.LeftFrame.ChatIcon.Background.Icon.ImageTransparency=1
+
+local FakeChat=Instance.new("ImageLabel",TopBar.LeftFrame.ChatIcon.Background)
+FakeChat.Name="IconOld"
+FakeChat.Size=UDim2.new(0,30,0,30)
+FakeChat.Position=UDim2.new(0,0,0,2)
+FakeChat.BackgroundTransparency=1
+FakeChat.ScaleType="Fit"
+local FakeChatState
+if TopBar.LeftFrame.ChatIcon.Background.Icon.Image == "rbxasset://textures/ui/TopBar/chatOn.png" then FakeChatState=true else FakeChatState=false end
+TopBar.LeftFrame.ChatIcon.Background.MouseButton1Click:Connect(function()
+	FakeChatState = not FakeChatState
+	if FakeChatState then FakeChat.Image = "rbxasset://textures/ui/Chat/ChatDown@2x.png" else FakeChat.Image = "rbxasset://textures/ui/Chat/Chat@2x.png" end
+end)
+if FakeChatState then FakeChat.Image = "rbxasset://textures/ui/Chat/ChatDown@2x.png" else FakeChat.Image = "rbxasset://textures/ui/Chat/Chat@2x.png" end
+
+local BackpackHold=Instance.new("Frame",TopBar.LeftFrame)
+BackpackHold.Name="BackpackIcon"
+BackpackHold.Size=UDim2.new(0,30,1,0)
+BackpackHold.LayoutOrder=1000
+BackpackHold.BackgroundTransparency=1
+local Backpack=Instance.new("ImageButton",BackpackHold)
+Backpack.Size=UDim2.new(0,30,0,30)
+Backpack.BackgroundTransparency=1
+Backpack.Position=UDim2.new(0,-15,0,5)
+Backpack.Image="rbxasset://textures/ui/Backpack/Backpack@2x.png"
+Backpack.ScaleType="Fit"
+local BackpackState=false
+Backpack.MouseButton1Click:Connect(function()
+	BackpackState = not BackpackState
+	if BackpackState then Backpack.Image="rbxasset://textures/ui/Backpack/Backpack_Down@2x.png" else Backpack.Image="rbxasset://textures/ui/Backpack/Backpack@2x.png" end
+	game:GetService('VirtualInputManager'):SendKeyEvent(true,Enum.KeyCode.Backquote,false,uwu)
+end)
 
 TopBar.RightFrame.Layout.Padding=UDim.new(0,0)
 local Health=Instance.new("Frame",TopBar.RightFrame)
@@ -74,7 +114,7 @@ if game:GetService("Players").LocalPlayer:FindFirstChild("leaderstats") then
         Label.RichText=true
         Label.Text="<b>"..tostring(Stat.Value).."</b>"
         Stat.Changed:Connect(function(Val)
-            Label.Text=Val
+            Label.Text="<b>"..tostring(Val).."</b>"
         end)
     end
 end
@@ -83,10 +123,11 @@ end
 game.CoreGui.PlayerList.PlayerListMaster.OffsetFrame.PlayerScrollList.Visible=false
 List = Instance.new("ScrollingFrame",game.CoreGui.PlayerList.PlayerListMaster.OffsetFrame)
 List.Size=UDim2.new(0,300,0,350)
-List.Position=UDim2.new(1,-314,0,4)
+List.Position=UDim2.new(1,-309,0,0)
 List.BackgroundTransparency=1
 List.BorderSizePixel=0
 List.ScrollBarThickness=2
+List.Name="OldPlayerList"
 
 function UpdateList()
     if List:FindFirstChild("CurrentList") then List.CurrentList:Destroy() end
@@ -131,7 +172,7 @@ function UpdateList()
     PlrNameFrame.Name="Plr"
     PlrNameFrame.BackgroundTransparency=0.6
     PlrNameFrame.BackgroundColor3=Color3.new(0,0,0)
-    PlrNameFrame.Size=UDim2.new(0,168,1,0)
+    PlrNameFrame.Size=UDim2.new(0,188,1,0)
     PlrNameFrame.LayoutOrder=-9999999
     PlrNameFrame.TextColor3=Color3.new(1,1,1)
     PlrNameFrame.Text=""
