@@ -49,8 +49,9 @@ function Harvest(Amount)
                 print(Desc.ClassName)
                 if Desc:IsA("ProximityPrompt") and Desc.Enabled then
                     TpTo(CFrame.new(Desc.Parent.Position))
-                    task.wait()
+                    task.wait(0.02)
                     fireproximityprompt(Desc)
+                    task.wait(0.01)
                     Harvested += 1
                     break
                 end
