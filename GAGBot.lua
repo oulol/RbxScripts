@@ -16,6 +16,7 @@ end
 local CFB = nil
 function TpTo(CF)
     CFB = Player.Character.HumanoidRootPart.CFrame
+    task.wait()
     Player.Character.HumanoidRootPart.CFrame = CF
     task.wait(0.01)
 end
@@ -117,31 +118,38 @@ function AmountInInv()
     return Amount
 end
 
+local Queue = {}
+
 workspace.ChildAdded:Connect(function(Obj)
     if Obj:IsA("Model") and Obj:GetAttribute("OWNER") == Player.Name then
-        firetouchinterest(Player.Character.HumanoidRootPart, Obj:FindFirstChildWhichIsA("BasePart"), true)
+        table.insert(Queue, Obj)
     end
 end)
 
 
-local summer = false
+local Summer = false
 
 task.spawn(function()
     while task.wait(1) do
         local date = os.date("*t")
-        summer = (date.min < 10)
+        Summer = (date.min < 10)
     end
 end)
 
 task.spawn(function()
     while true do
         Buy(3)
-        task.wait(10)
+        task.wait(5)
     end
 end)
 
 while true do
-    if summer then
+    for _, Seed in Queue do
+        TpTo(Seed)
+        repeat task.wait() until Seed.Parent ~= workspace
+        TpRb()
+    end
+    if Summer then
         Harvest(10)
         GiveAll()
         task.wait(0.2)
