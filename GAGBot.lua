@@ -22,10 +22,11 @@ function TpTo(CF)
     Player.Character.HumanoidRootPart.Anchored = true
     CFB = Player.Character.HumanoidRootPart.CFrame
     Player.Character.HumanoidRootPart.CFrame = CF
+    task.wait(0.01)
 end
 
 function TpRb()
-    task.wait()
+    task.wait(0.01)
     Player.Character.HumanoidRootPart.CFrame = CFB
     Player.Character.HumanoidRootPart.Anchored = false
 end
@@ -148,8 +149,8 @@ while true do
         task.wait(0.2)
     else
         Plant(999)
-        task.wait(5)
-        if AmountInInv() < 100 then
+        task.wait(1)
+        if AmountInInv() < 140 then
             Harvest(10)
         end
     end
