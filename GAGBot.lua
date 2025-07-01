@@ -111,7 +111,7 @@ function GiveAll()
 end
 
 function SellAll()
-    TpTo(workspace.NPCs.Steven:GetPivot())
+    TpTo(workspace.NPCS.Steven:GetPivot())
     Events.Sell_Inventory:FireServer()
     TpRb()
 end
