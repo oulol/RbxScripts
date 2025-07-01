@@ -154,3 +154,5 @@ while true do
         end
     end
 end
+
+-- loadstring(game:HttpGet("https://raw.githubusercontent.com/oulol/RbxScripts/refs/heads/main/GAGBot.lua"))()
