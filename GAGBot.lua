@@ -13,10 +13,6 @@ for _, LFarm in workspace.Farm:GetChildren() do
     end
 end
 
-firesignal(Events.Notification.OnClientEvent,
-    "Farm detected"
-)
-
 local CFB = nil
 function TpTo(CF)
     CFB = Player.Character.HumanoidRootPart.CFrame
@@ -30,10 +26,6 @@ function TpRb()
 end
 
 function Buy(Amount)
-    firesignal(Events.Notification.OnClientEvent,
-        "Buy sent"
-    )
-
     for I=1,Amount do
         Events.BuySeedStock:FireServer("Tomato")
     end
@@ -139,6 +131,11 @@ task.spawn(function()
         Buy(3)
         task.wait(10)
     end
+end)
+
+workspace.ChildAdded:Connect(function(Obj)
+    if Obj:IsA("Model") and Obj:GetAttribute("OWNER") == Player.Name then
+        firetouchinterest(Player.Character.HumanoidRootPart, Obj:FindFirstChildWhichIsA("BasePart"), true)
 end)
 
 while true do
