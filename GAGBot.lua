@@ -145,7 +145,7 @@ end)
 
 while true do
     for _, Seed in Queue do
-        TpTo(Seed)
+        TpTo(Seed:GetPivot())
         repeat task.wait() until Seed.Parent ~= workspace
         TpRb()
     end
