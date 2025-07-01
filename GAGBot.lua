@@ -111,7 +111,9 @@ function GiveAll()
 end
 
 function SellAll()
+    TpTo(workspace.NPCs.Steven:GetPivot())
     Events.Sell_Inventory:FireServer()
+    TpRb()
 end
 
 function StartsWith(Str, Start)
