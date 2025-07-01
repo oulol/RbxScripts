@@ -99,7 +99,7 @@ function Plant(Amount)
         TpTo(CFrame.new(Pos))
         Events.Plant_RE:FireServer(Pos, "Tomato")
         TpRb()
-        task.wait(0.5)
+        task.wait(0.1)
     end
 
     task.wait(0.1)
@@ -108,6 +108,10 @@ end
 
 function GiveAll()
     Events.SummerHarvestRemoteEvent:FireServer("SubmitAllPlants")
+end
+
+function SellAll()
+    Events.Sell_Inventory:FireServer()
 end
 
 function StartsWith(Str, Start)
@@ -135,12 +139,18 @@ workspace.ChildAdded:Connect(function(Obj)
 end)
 
 
-local Summer = false
+local State = 1
 
 task.spawn(function()
     while task.wait(1) do
         local date = os.date("*t")
-        Summer = (date.min < 10)
+        if (date.min < 10) then
+            State = 0
+        else if (date.min > 10 and date.min < 40) then
+            State = 2
+        else 
+            State = 1
+        end
     end
 end)
 
@@ -159,18 +169,20 @@ while true do
         TpRb()
     end
     Queue = {}
-    if Summer then
-        Notify("Summer event mode")
-        Harvest(10)
+    if State == 0 then
+        Harvest(20)
         GiveAll()
-        task.wait(0.2)
-    else
-        Notify("Planting and harvesting")
+        task.wait()
+    else if State == 1 then
         Plant(999)
         task.wait(1)
         if AmountInInv() < 140 then
             Harvest(10)
         end
+    else if State == 2 then
+        Harvest(25)
+        SellAll()
+        task.wait()
     end
 end
 
