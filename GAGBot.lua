@@ -19,7 +19,6 @@ firesignal(Events.Notification.OnClientEvent,
 
 local CFB = nil
 function TpTo(CF)
-    Player.Character.HumanoidRootPart.Anchored = true
     CFB = Player.Character.HumanoidRootPart.CFrame
     Player.Character.HumanoidRootPart.CFrame = CF
     task.wait(0.01)
@@ -28,7 +27,6 @@ end
 function TpRb()
     task.wait(0.01)
     Player.Character.HumanoidRootPart.CFrame = CFB
-    Player.Character.HumanoidRootPart.Anchored = false
 end
 
 function Buy(Amount)
