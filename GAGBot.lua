@@ -13,6 +13,12 @@ for _, LFarm in workspace.Farm:GetChildren() do
     end
 end
 
+function Notify(text)
+    print("FARM -", text)
+end
+
+
+Notify("Script started")
 local CFB = nil
 function TpTo(CF)
     CFB = Player.Character.HumanoidRootPart.CFrame
@@ -33,6 +39,7 @@ function Buy(Amount)
 end
 
 function Harvest(Amount)
+    Notify("Harvesting")
     local Harvested = 0
     for _, Plant in Farm.Plants_Physical:GetChildren() do
         for __, Fruit in Plant.Fruits:GetChildren() do
@@ -59,6 +66,7 @@ function Harvest(Amount)
 end
 
 function Plant(Amount)
+    Notify("Planting")
     local Item = nil
     local RealAmount = 0
     for I=1,999 do
@@ -123,6 +131,7 @@ local Queue = {}
 workspace.ChildAdded:Connect(function(Obj)
     if Obj:IsA("Model") and Obj:GetAttribute("OWNER") == Player.Name then
         table.insert(Queue, Obj)
+        Notify("Queued seed pickup")
     end
 end)
 
@@ -145,15 +154,18 @@ end)
 
 while true do
     for _, Seed in Queue do
+        Notify("Picking a seed up")
         TpTo(Seed:GetPivot())
         repeat task.wait() until Seed.Parent ~= workspace
         TpRb()
     end
     if Summer then
+        Notify("Summer event mode")
         Harvest(10)
         GiveAll()
         task.wait(0.2)
     else
+        Notify("Planting and harvesting")
         Plant(999)
         task.wait(1)
         if AmountInInv() < 140 then
