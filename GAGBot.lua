@@ -44,7 +44,6 @@ function Harvest(Amount)
     for _, Plant in Farm.Plants_Physical:GetChildren() do
         for __, Fruit in Plant.Fruits:GetChildren() do
             for ___, Desc in Fruit:GetDescendants() do
-                print(Desc.ClassName)
                 if Desc:IsA("ProximityPrompt") and Desc.Enabled then
                     TpTo(CFrame.new(Desc.Parent.Position))
                     task.wait(0.02)
@@ -159,6 +158,7 @@ while true do
         repeat task.wait() until Seed.Parent ~= workspace
         TpRb()
     end
+    Queue = {}
     if Summer then
         Notify("Summer event mode")
         Harvest(10)
