@@ -117,6 +117,13 @@ function AmountInInv()
     return Amount
 end
 
+workspace.ChildAdded:Connect(function(Obj)
+    if Obj:IsA("Model") and Obj:GetAttribute("OWNER") == Player.Name then
+        firetouchinterest(Player.Character.HumanoidRootPart, Obj:FindFirstChildWhichIsA("BasePart"), true)
+    end
+end)
+
+
 local summer = false
 
 task.spawn(function()
@@ -131,11 +138,6 @@ task.spawn(function()
         Buy(3)
         task.wait(10)
     end
-end)
-
-workspace.ChildAdded:Connect(function(Obj)
-    if Obj:IsA("Model") and Obj:GetAttribute("OWNER") == Player.Name then
-        firetouchinterest(Player.Character.HumanoidRootPart, Obj:FindFirstChildWhichIsA("BasePart"), true)
 end)
 
 while true do
