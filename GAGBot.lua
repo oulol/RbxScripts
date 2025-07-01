@@ -146,7 +146,7 @@ task.spawn(function()
         local date = os.date("*t")
         if (date.min < 10) then
             State = 0
-        else if (date.min > 10 and date.min < 40) then
+        elseif (date.min > 10 and date.min < 40) then
             State = 2
         else 
             State = 1
@@ -173,13 +173,13 @@ while true do
         Harvest(20)
         GiveAll()
         task.wait()
-    else if State == 1 then
+    elseif State == 1 then
         Plant(999)
         task.wait(1)
         if AmountInInv() < 140 then
             Harvest(10)
         end
-    else if State == 2 then
+    elseif State == 2 then
         Harvest(25)
         SellAll()
         task.wait()
