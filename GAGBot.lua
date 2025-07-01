@@ -184,7 +184,7 @@ while true do
     elseif State == 2 then
         Harvest(25)
         SellAll()
-        task.wait()
+        task.wait(0.1)
     end
 end
 
