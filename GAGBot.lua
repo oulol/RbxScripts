@@ -38,7 +38,7 @@ function Buy(Amount)
     end
 end
 
-function Harvest(Amount)
+function Harvest2(Amount)
     Notify("Harvesting")
     local Harvested = 0
     for _, Plant in Farm.Plants_Physical:GetChildren() do
@@ -61,6 +61,28 @@ function Harvest(Amount)
     end
 
     TpRb()
+    return false
+end
+
+
+function Harvest(Amount)
+    Notify("Harvesting")
+    local Harvested = 0
+    for _, Plant in Farm.Plants_Physical:GetChildren() do
+        for __, Fruit in Plant.Fruits:GetChildren() do
+            for ___, Desc in Fruit:GetDescendants() do
+                if Desc:IsA("ProximityPrompt") and Desc.Enabled then
+                    ReplicatedStorage.ByteNetReliable:FireServer(buffer.fromstring("\001\001\000\001"), {Fruit})
+                    Harvested += 1
+                    break
+                end
+            end
+            if Harvested == Amount then
+                return true
+            end
+        end
+    end
+
     return false
 end
 
@@ -111,10 +133,8 @@ function GiveAll()
 end
 
 function SellAll()
-    task.wait(1)
     TpTo(workspace.NPCS.Steven:GetPivot())
     Events.Sell_Inventory:FireServer()
-    task.wait(0.5)
     TpRb()
 end
 
@@ -174,8 +194,9 @@ while true do
     end
     Queue = {}
     if State == 0 then
-        Harvest(30)
+        Harvest(20)
         GiveAll()
+        task.wait()
     elseif State == 1 then
         Plant(999)
         task.wait(1)
@@ -185,7 +206,7 @@ while true do
     elseif State == 2 then
         Harvest(25)
         SellAll()
-        task.wait()
+        task.wait(0.5)
     end
 end
 
