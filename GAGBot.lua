@@ -114,7 +114,7 @@ function SellAll()
     task.wait(0.2)
     TpTo(workspace.NPCS.Steven:GetPivot())
     Events.Sell_Inventory:FireServer()
-    task.wait(0.2)
+    task.wait(1)
     TpRb()
 end
 
