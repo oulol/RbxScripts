@@ -174,9 +174,8 @@ while true do
     end
     Queue = {}
     if State == 0 then
-        Harvest(10)
+        Harvest(30)
         GiveAll()
-        task.wait()
     elseif State == 1 then
         Plant(999)
         task.wait(1)
@@ -186,7 +185,7 @@ while true do
     elseif State == 2 then
         Harvest(25)
         SellAll()
-        task.wait(0.1)
+        task.wait()
     end
 end
 
