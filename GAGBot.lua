@@ -111,8 +111,10 @@ function GiveAll()
 end
 
 function SellAll()
+    task.wait(0.2)
     TpTo(workspace.NPCS.Steven:GetPivot())
     Events.Sell_Inventory:FireServer()
+    task.wait(0.2)
     TpRb()
 end
 
@@ -172,7 +174,7 @@ while true do
     end
     Queue = {}
     if State == 0 then
-        Harvest(20)
+        Harvest(2)
         GiveAll()
         task.wait()
     elseif State == 1 then
