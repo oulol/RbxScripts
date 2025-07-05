@@ -199,6 +199,7 @@ task.spawn(function()
         end
         TpBusy = false
         Queue = {}
+        task.wait(1)
     end
 end)
 
