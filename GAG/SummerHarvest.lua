@@ -188,13 +188,8 @@ task.spawn(function()
     end
 end)
 
-while true do
-    if TpBusy then
-        task.wait(1)
-        continue
-    end
-    
-    task.spawn(fucntion()
+task.spawn(function()
+    while true do
         TpBusy = true
         for _, Seed in Queue do
             Notify("Picking a seed up")
@@ -204,8 +199,8 @@ while true do
         end
         TpBusy = false
         Queue = {}
-    end)
-end
+    end
+end)
 
 while true do
     if State == 0 then
