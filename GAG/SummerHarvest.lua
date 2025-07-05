@@ -1,5 +1,3 @@
--- Auto Summer Harvest script by oulol lolll
-
 local ReplicatedStorage = game.ReplicatedStorage
 local Events = ReplicatedStorage.GameEvents
 
@@ -19,6 +17,7 @@ end
 
 
 Notify("Script started")
+local TpBusy = false
 local CFB = nil
 function TpTo(CF)
     CFB = Player.Character.HumanoidRootPart.CFrame
@@ -161,6 +160,7 @@ workspace.ChildAdded:Connect(function(Obj)
     if Obj:IsA("Model") and Obj:GetAttribute("OWNER") == Player.Name then
         table.insert(Queue, Obj)
         Notify("Queued seed pickup")
+        task.wait(0.1)
     end
 end)
 
@@ -168,7 +168,7 @@ end)
 local State = 1
 
 task.spawn(function()
-    while task.wait(1) do
+    while true do
         local date = os.date("*t")
         if (date.min < 10) then
             State = 0
@@ -177,6 +177,7 @@ task.spawn(function()
         else 
             State = 1
         end
+        task.wait(5)
     end
 end)
 
@@ -188,28 +189,45 @@ task.spawn(function()
 end)
 
 while true do
-    for _, Seed in Queue do
-        Notify("Picking a seed up")
-        TpTo(Seed:GetPivot())
-        repeat task.wait() until Seed.Parent ~= workspace
-        TpRb()
+    if TpBusy then
+        task.wait(1)
+        continue
     end
-    Queue = {}
+    
+    task.spawn(fucntion()
+        TpBusy = true
+        for _, Seed in Queue do
+            Notify("Picking a seed up")
+            TpTo(Seed:GetPivot())
+            repeat task.wait() until Seed.Parent ~= workspace
+            TpRb()
+        end
+        TpBusy = false
+        Queue = {}
+    end)
+end
+
+while true do
     if State == 0 then
         Harvest(20)
         GiveAll()
-        task.wait()
+        task.wait(0.1)
     elseif State == 1 then
+        if TpBusy then
+            continue
+        end
         Plant(999)
         task.wait(1)
         if AmountInInv() < 140 then
             Harvest(10)
         end
     elseif State == 2 then
+        if TpBusy then
+            continue
+        end
         Harvest(25)
         SellAll()
         task.wait(0.5)
     end
+    task.wait()
 end
-
--- loadstring(game:HttpGet("https://raw.githubusercontent.com/oulol/RbxScripts/refs/heads/main/GAGBot.lua"))()
