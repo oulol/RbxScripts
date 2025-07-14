@@ -1,1 +1,1 @@
-loadstring(game:HttpGet("https://raw.githubusercontent.com/oulol/RbxScripts/refs/heads/main/GAG/SummerHarvest.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/oulol/RbxScripts/refs/heads/main/GAG/LagMachine.lua"))()
