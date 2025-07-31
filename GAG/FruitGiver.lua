@@ -45,11 +45,17 @@ function Gift(OPlayer: Player, Amount, Mutation)
 	end
 	
 	local Items = GetItems(Mutation)
+	if #Items == 0 then
+		Say("No " .. Mutation .. " items in stock.")
+		return
+	end
+	
 	TpTo(OPlayer.Character:GetPivot())
+	local Timeout = 0
 	for I=1,Amount do
 		local Item = Items[I]
 		if not Item then Say("Error.") continue end
-		local Timeout = 0
+		Timeout = 0
 		Player.Character.Humanoid:EquipTool(Item)
 		task.wait(1)
 		for I=1,5 do
@@ -58,12 +64,15 @@ function Gift(OPlayer: Player, Amount, Mutation)
 		end
 		repeat task.wait(0.1) Timeout += 0.1 until Item.Parent ~= Player.Character or Timeout >= 30
 		if Timeout >= 30 then
-			Say("Trade timeout.")
 			break
 		end
 	end
 	Player.Character.Humanoid:UnequipTools()
-	Say("Trade finished.")
+	if Timeout >= 30 then
+		Say("Trade timeout.")
+	else
+		Say("Trade finished.")
+	end
 	TpRb()
 end
 
@@ -125,6 +134,7 @@ function ChatCb(Msg, Plr)
 		local Mutation = MsgS[2]
 		local Amount = tonumber(MsgS[3])
 		local InInventory = GetItems(Mutation)
+		Say("Working...")
 		if #InInventory < Amount then
 			Harvest(Amount - #InInventory, Mutation)
 			repeat task.wait() InInventory = GetItems(Mutation) until #InInventory >= Amount
