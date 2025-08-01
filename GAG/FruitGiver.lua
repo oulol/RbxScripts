@@ -57,7 +57,7 @@ function Gift(OPlayer: Player, Amount, Mutation)
 		if not Item then Say("Error.") continue end
 		Timeout = 0
 		Player.Character.Humanoid:EquipTool(Item)
-		task.wait(1)
+		task.wait(0.2)
 		for I=1,5 do
 			fireproximityprompt(OPlayer.Character.HumanoidRootPart.ProximityPrompt)
 			task.wait(0.1)
